@@ -19,12 +19,16 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
       - name: Build and push Docker images
         uses: docker/build-push-action@v2
         with:
           context: .
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
           tags: devonm/netbox-docker-saml:${{ github.event.inputs.from_tag }}
           push: ${{ github.event_name == 'workflow_dispatch' }}
           build-args: FROM_TAG=${{ github.event.inputs.from_tag || 'latest' }}
