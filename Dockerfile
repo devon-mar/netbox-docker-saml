@@ -1,3 +1,4 @@
+ARG FROM_TAG
 FROM netboxcommunity/netbox:${FROM_TAG}
 
 RUN apk add xmlsec
