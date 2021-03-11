@@ -1,0 +1,26 @@
+---
+name: build
+
+on:
+  workflow_dispatch:
+    inputs:
+      from_tag:
+        description: "netboxcommunity/netbox tag to use"
+        required: true
+        default: "latest"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Build and push Docker images
+      uses: docker/build-push-action@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+        dockerfile: Dockerfile
+        repository: devonm/netbox-docker-saml
+        BUILD_ARGS: FROM_TAG=${{ github.event.inputs.from_tag }}
