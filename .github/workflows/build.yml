@@ -25,4 +25,5 @@ jobs:
           dockerfile: Dockerfile
           repository: devonm/netbox-docker-saml
           tags: ${{ github.event.inputs.from_tag }}
+          push: ${{ github.event_name == 'workflow_dispatch' }}
           build_args: FROM_TAG=${{ github.event.inputs.from_tag || 'latest' }}
