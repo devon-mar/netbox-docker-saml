@@ -23,4 +23,5 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
         dockerfile: Dockerfile
         repository: devonm/netbox-docker-saml
-        BUILD_ARGS: FROM_TAG=${{ github.event.inputs.from_tag }}
+        tags: ${{ github.event.inputs.from_tag }}
+        build_args: FROM_TAG=${{ github.event.inputs.from_tag }}
