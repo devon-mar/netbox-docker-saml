@@ -4,13 +4,8 @@ name: build
 on:
   push:
     branches: [master]
-
-  workflow_dispatch:
-    inputs:
-      from_tag:
-        description: "netboxcommunity/netbox tag to use"
-        required: true
-        default: "latest"
+  pull_request:
+    branches: [master]
 
 jobs:
   build:
@@ -31,7 +26,7 @@ jobs:
         with:
           context: .
           tags: devonm/netbox-docker-saml:${{ github.event.inputs.from_tag || env.DEFAULT_FROM_TAG }}
-          push: ${{ github.event_name == 'workflow_dispatch' }}
+          push: ${{ github.event_name == 'push' }}
           build-args: FROM_TAG=${{ github.event.inputs.from_tag || env.DEFAULT_FROM_TAG }}
         env:
           DEFAULT_FROM_TAG: latest
